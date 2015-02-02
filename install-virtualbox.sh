@@ -77,6 +77,16 @@ cat <<-EOF > "${TARGET_DIR}${CONFIG_SCRIPT}"
 	/usr/bin/chown vagrant:users /home/vagrant/.ssh/authorized_keys
 	/usr/bin/chmod 0600 /home/vagrant/.ssh/authorized_keys
 
+	# Chef Client
+	/usr/bin/mkdir -p /tmp/aur_pkgbuilds
+	/usr/bin/cd /tmp/aur_pkgbuilds
+	/usr/bin/wget http://aur.archlinux.org/packages/om/omnibus-chef/omnibus-chef.tar.gz
+	/usr/bin/tar xvf omnibus-chef.tar.gz
+	/usr/bin/cd omnibus-chef
+	/usr/bin/makepkg -i PKGBUILD
+	/usr/bin/cd /
+	/usr/bin/rm -rf /tmp/aur_pkgbuilds
+
 	# clean up
 	/usr/bin/pacman -Rcns --noconfirm gptfdisk
 	/usr/bin/pacman -Scc --noconfirm
